@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Login from "./Login";
+//import ClinicReservationPage from "./ClinicReservationPage";
+import ClinicResrvationPage_patient from "./ClinicResrvationPage_patient";
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("login"); // Initialize to 'login'
+
+  const navigateTo = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {currentPage === "login" && <Login navigateTo={navigateTo} />}
+      {currentPage === "clinic-reservation" && <ClinicResrvationPage_patient/>}
     </div>
   );
 }
