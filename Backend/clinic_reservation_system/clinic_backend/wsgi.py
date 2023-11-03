@@ -1,5 +1,5 @@
 """
-WSGI config for clinic_reservation_system project.
+WSGI config for clinic_backend project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'clinic_reservation_system.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'clinic_backend.settings')
 
 application = get_wsgi_application()
