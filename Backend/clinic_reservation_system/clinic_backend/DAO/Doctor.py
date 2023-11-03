@@ -9,6 +9,5 @@ class Doctor:
 
     def get_password(self):
         return self.password
-
-    def get_role(self):
-        return self.role
+        
+    
