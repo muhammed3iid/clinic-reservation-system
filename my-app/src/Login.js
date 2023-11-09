@@ -56,11 +56,26 @@ const Login = ({ navigateTo }) => {
         {isSignUp && (
           <div>
             <label>User Type:</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="DOCTOR">Doctor</option>
-              <option value="PATIENT">Patient</option>
-            </select>
+            <label>
+              <input
+                type="radio"
+                value="DOCTOR"
+                checked={role === "DOCTOR"}
+                onChange={() => setRole("DOCTOR")}
+              />
+              Doctor
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="PATIENT"
+                checked={role === "PATIENT"}
+                onChange={() => setRole("PATIENT")}
+              />
+              Patient
+            </label>
           </div>
+
         )}
         {isSignUp ? (
           <button onClick={handleSignUp}>Sign Up</button>
