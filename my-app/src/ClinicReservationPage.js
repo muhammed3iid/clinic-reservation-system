@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './Clinic.css'
+import './Style/Clinic.css'
 const ClinicReservationPage = () => {
   const [userType] = useState('doctor');
   const [schedule, setSchedule] = useState([

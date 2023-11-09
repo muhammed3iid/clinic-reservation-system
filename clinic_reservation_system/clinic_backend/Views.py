@@ -136,3 +136,16 @@ def patient_delete_slot(request):  # -- PATIENT DELETE SLOT --------------------
             {'status': True, 'message': 'Slot successfully deleted.'})
     except Exception as e:
         return JsonResponse({'status': False, 'message': str(e)})
+
+
+@api_view(['GET'])
+def patient_view_slots(request):  # -- PATIENT VIEW SLOTS --------------------------------------------------------------
+    try:
+        username = request.data.get('username')
+        slot = Slot.objects.get(patient=username)
+        serializer = SlotSerializer(data=slot.__dict__)
+        if serializer.is_valid(raise_exception=True):
+            return JsonResponse(
+                {'status': True, 'message': 'Slots successfully retrieved.', "object": serializer.validated_data})
+    except Exception as e:
+        return JsonResponse({'status': False, 'message': str(e)})

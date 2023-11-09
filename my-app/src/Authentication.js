@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import'./Login.css'
+import'./Style/Authentication.css'
 
 const Login = ({ navigateTo }) => {
   const [username, setUsername] = useState("");
@@ -13,13 +13,11 @@ const Login = ({ navigateTo }) => {
   };
 
   const handleSignUp = async () => {
-    console.log("hello 1");
     const data = {
       username: username,
       password: password,
       role: role,
     };
-    console.log("hello 2");
 
     try {
       const response = await fetch('http://127.0.0.1:8000/sign_up_doctor/', {
@@ -42,40 +40,39 @@ const Login = ({ navigateTo }) => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>{isSignUp ? "Sign Up" : "Log in"}</h2>
       <form>
         <div>
-          <label>Username:</label>
+          <label>Username</label>
           <input type="username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div>
-          <label>Password:</label>
+          <label>Password</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         {isSignUp && (
           <div>
-            <label>User Type:</label>
+            <label>Enter is your role</label>
             <label>
               <input
                 type="radio"
-                value="DOCTOR"
-                checked={role === "DOCTOR"}
-                onChange={() => setRole("DOCTOR")}
+                value="Doctor"
+                checked={role === "Doctor"}
+                onChange={() => setRole("Doctor")}
               />
               Doctor
             </label>
             <label>
               <input
                 type="radio"
-                value="PATIENT"
-                checked={role === "PATIENT"}
-                onChange={() => setRole("PATIENT")}
+                value="Patient"
+                checked={role === "Patient"}
+                onChange={() => setRole("Patient")}
               />
               Patient
             </label>
           </div>
-
         )}
         {isSignUp ? (
           <button onClick={handleSignUp}>Sign Up</button>
@@ -84,9 +81,8 @@ const Login = ({ navigateTo }) => {
         )}
       </form>
       <p>
-        {isSignUp
-          ? "Already have an account? "
-          : "Don't have an account? "}
+        {isSignUp ? "Already have an account? ": "Don't have an account? "}
+        <br />
         <button onClick={() => setIsSignUp(!isSignUp)}>
           {isSignUp ? "Log in" : "Sign Up"}
         </button>

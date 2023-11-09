@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Login from "./Login";
-import ClinicResrvationPage_patient from "./ClinicResrvationPage_patient";
+import Authentication from "./Authentication";
+import ClinicReservationPage_patient from "./ClinicReservationPage_patient";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("login"); // Initialize to 'login'
+  const [currentPage, setCurrentPage] = useState("Authentication");
 
   const navigateTo = (page) => {
     setCurrentPage(page);
@@ -11,8 +11,8 @@ function App() {
 
   return (
     <div className="App">
-      {currentPage === "login" && <Login navigateTo={navigateTo} />}
-      {currentPage === "clinic-reservation" && <ClinicResrvationPage_patient/>}
+      {currentPage === "Authentication" && <Authentication navigateTo={navigateTo} />}
+      {currentPage === "clinic-reservation" && <ClinicReservationPage_patient/>}
     </div>
   );
 }
