@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import './Style/Clinic.css'
-const ClinicReservationPage = () => {
-  const [userType] = useState('doctor');
+
+const DoctorClinic = () => {
+  const [role] = useState("Doctor");
   const [schedule, setSchedule] = useState([
     { date: '2023-11-01', hour: '09:00 AM' },
     { date: '2023-11-02', hour: '02:30 PM' },
@@ -31,7 +32,7 @@ const ClinicReservationPage = () => {
 
   return (
     <div>
-      <p>Hello, User (user type: {userType})</p>
+      <p>Hello, User (user role: {role})</p>
 
       <h2>My Slots</h2>
 
@@ -80,4 +81,4 @@ const ClinicReservationPage = () => {
   );
 };
 
-export default ClinicReservationPage;
+export default DoctorClinic;

@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Authentication from "./Authentication";
-import ClinicReservationPage_patient from "./ClinicReservationPage_patient";
+import DoctorClinic from "./DoctorClinic";
+import PatientClinic from "./PatientClinic";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("Authentication");
+//  const [currentPage, setCurrentPage] = useState("Authentication");
 
-  const navigateTo = (page) => {
-    setCurrentPage(page);
-  };
+  // const navigateTo = (page) => {
+  //   setCurrentPage(page);
+  // };
 
   return (
-    <div className="App">
-      {currentPage === "Authentication" && <Authentication navigateTo={navigateTo} />}
-      {currentPage === "clinic-reservation" && <ClinicReservationPage_patient/>}
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Authentication}/>
+        <Route path="/DoctorClinic" component={DoctorClinic}/>
+        <Route path="/PatientClinic" component={PatientClinic}/>
+      </Switch>
+    </Router>
   );
 }
 

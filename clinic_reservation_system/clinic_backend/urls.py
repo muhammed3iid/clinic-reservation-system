@@ -11,5 +11,7 @@ urlpatterns = [
     path('choose_slot/', Views.patient_choose_slot),
     path('update_slot/', Views.patient_update_slot),
     path('delete_slot/', Views.patient_delete_slot),
-    path('view_slots/', Views.patient_view_slots)
+    path('view_slots/', Views.patient_view_slots),
+    path('get_doctors/', Views.get_doctors)
+
 ]

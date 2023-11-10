@@ -35,7 +35,7 @@ def sign_up(request):  # -- SIGN UP USER ---------------------------------------
         return JsonResponse({'status': False, 'message': str(e)})
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def sign_in(request):  # -- SIGN IN USER -------------------------------------------------------------------------------
     try:
         username = request.data.get('username')
@@ -141,11 +141,18 @@ def patient_delete_slot(request):  # -- PATIENT DELETE SLOT --------------------
 @api_view(['GET'])
 def patient_view_slots(request):  # -- PATIENT VIEW SLOTS --------------------------------------------------------------
     try:
-        username = request.data.get('username')
-        slot = Slot.objects.get(patient=username)
-        serializer = SlotSerializer(data=slot.__dict__)
-        if serializer.is_valid(raise_exception=True):
-            return JsonResponse(
-                {'status': True, 'message': 'Slots successfully retrieved.', "object": serializer.validated_data})
+        username = request.query_params.get('username')
+        slot = Slot.objects.filter(patient=username)
+        serializer = SlotSerializer(slot, many=True)
+        return JsonResponse(
+            {'status': True, 'message': 'Slots successfully retrieved.', "object": serializer.data})
     except Exception as e:
         return JsonResponse({'status': False, 'message': str(e)})
+
+
+@api_view(['GET'])
+def get_doctors(request):  # -- GET ALL DOCTORS ------------------------------------------------------------------------
+    doctors = Doctor.objects.all()
+    serializer = DoctorSerializer(doctors, many=True)
+    return JsonResponse(
+        {'status': True, 'message': 'Slots successfully retrieved.', "object": serializer.data})
