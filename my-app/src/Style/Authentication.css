@@ -1,78 +1,84 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
+  /* font-family: Arial, sans-serif; */
+  background-color: #585858;
+  display:flex;
   align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 .form-container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  /* padding: 20px; */
+  background-color: #A0A0A0;
+  border-radius: 20px;
+  box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
-  padding: 50px 20px 50px 20px;
+  align-items: center;
+  padding: 20px 20px 20px 20px;
+  width: 520px;
 }
 
 .form-container h2 {
-  font-size: 48 px;
-  /* margin: 0 0 20px; */
-}
-
-.form-container form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px 50px 50px 50px;
+  font-size: 52px;
+  font-family: 'Trebuchet MS';
 }
 
 .form-container label {
-  font-weight: bold;
-  margin: 22px 0;
+  font-family: 'HP Simplified';
+  font-size: 28px;
+  width: 100%;
+  font-weight:400 ;
 }
 
 .form-container input {
-  width: 100%;
-  padding: 12px;
-  margin: 5px 0 15px;
+  width: 400px;
+  padding: 8px 8px 8px ;
+  margin-left: 20px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.form-container select {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+  padding: 12px 12px 12px 12px;
+  border-radius: 15px;
+  cursor: text;
+ }
 
 .form-container button {
-  background-color: rgb(16, 66, 203);
+  background-color: black;
   color: #fff;
+  width: 300px;
   border: none;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 15px;
   cursor: pointer;
   font-weight: bold;
-  width: 220px;
+  display: inline-block;
 }
 
 .form-container button:hover {
-  background-color: #67a0de;
+  background-color: #585858;
 }
 
-.toggle-button {
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: underline;
-  color: #007bff;
-  margin-top: 10px;
+.form-container button.hint {
+  background-color: transparent;
+  font-size: 21px;
+  font-family: 'HP Simplified';
+  font-size: 28px;
+  width: 100%;
+  font-weight:400 ;
+  font-size: 22px;
+  color: black;
+  margin-bottom: 8px;
 }
 
-.form-container label input {
-  display: inline-block;
-  margin-right: 5px;
+/* Add these styles for the radio buttons and roleDiv */
+.form-container .roleDiv {
+  /* margin-top: 20px; */
+  align-items: center;
+}
+
+.form-container .roleDiv label {
+  font-size: 28px;
+  /* margin-right: 20px; */
+}
+
+.form-container .roleDiv input[type="radio"] {
+  margin-right: 60px;
+  margin-left: 60px;
 }

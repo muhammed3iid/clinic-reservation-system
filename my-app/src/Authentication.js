@@ -68,66 +68,59 @@ const Authentication = () => {
     } catch (error) {
       console.error(error);
     }
+    setIsSignUp(!isSignUp)
   };
 
   return (
     <div className="form-container">
       <h2>{isSignUp ? "Sign Up" : "Log in"}</h2>
-      <form>
-        <div>
-          <label>Username</label>
-          <input
-            type="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+      <label>Username</label>
+      <br/>
+      <input
+        type="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <br/>
+      <label>Password</label>
+      <br/>
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <br/>
+      {isSignUp && (
+        <div className="roleDiv">
+          <label>Enter your role</label>
+          <label>
+            <input
+              type="radio"
+              value="Doctor"
+              checked={role === "Doctor"}
+              onChange={() => setRole("Doctor")}
+            />
+            Doctor
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Patient"
+              checked={role === "Patient"}
+              onChange={() => setRole("Patient")}
+            />
+            Patient
+          </label>
         </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {isSignUp && (
-          <div>
-            <label>Enter is your role</label>
-            <label>
-              <input
-                type="radio"
-                value="Doctor"
-                checked={role === "Doctor"}
-                onChange={() => setRole("Doctor")}
-              />
-              Doctor
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="Patient"
-                checked={role === "Patient"}
-                onChange={() => setRole("Patient")}
-              />
-              Patient
-            </label>
-          </div>
-        )}
-        {isSignUp ? (
-          <button onClick={handleSignUp}>Sign Up</button>
-        ) : (
-          <button onClick={handleSignIn}>Sign In</button>
-        )}
-      </form>
-      <p>
-        {isSignUp
-          ? "Already have an account? Login to existing account."
-          : "Don't have an account? Register a new account."}
-        <br />
-        <button onClick={() => setIsSignUp(!isSignUp)}>
-          {isSignUp ? "Log in" : "Sign Up"}
-        </button>
-      </p>
+      )}
+      <br/>
+      {isSignUp ? (
+        <button onClick={handleSignUp}>Sign Up</button>
+      ) : (
+        <button onClick={handleSignIn}>Sign In</button>
+      )}
+        {isSignUp?(<button className="hint" onClick={() => setIsSignUp(!isSignUp)}>Already have an account? Login to existing account.</button>
+        ):(<button className="hint" onClick={() => setIsSignUp(!isSignUp)}>Don't have an account? Register a new account.</button>)}
     </div>
   );
 };

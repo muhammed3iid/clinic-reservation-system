@@ -14,6 +14,7 @@ const PatientClinic = () => {
     doctor: "",
   });
   const [successMessage, setSuccessMessage] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
 
   const fetchSchedule = async () => {
     try {
@@ -85,9 +86,7 @@ const PatientClinic = () => {
         if (response.ok) {
           const responseData = await response.json();
           if (responseData.status) {
-            // setSchedule([...schedule, slot]);
             setSchedule((prevSchedule) => [...prevSchedule, slot]);
-            // await fetchSchedule();
             setSlot({ date: "", time: "", doctor: "" });
             setSuccessMessage("Appointment reserved successfully ✅");
           } else {
@@ -139,44 +138,61 @@ const PatientClinic = () => {
     }
   };
 
-  const editSlot = async (index) => {
+  const openEditModal = (index) => {
+    setEditIndex(index);
     const appointmentToEdit = schedule[index];
-    const data = {
-      username: username,
-      doctor: appointmentToEdit.doctor,
+    setSlot({
       date: appointmentToEdit.date,
       time: appointmentToEdit.time,
-    };
-    try {
-      const response = await fetch("http://127.0.0.1:8000/update_slot/", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      doctor: appointmentToEdit.doctor,
+    });
+  };
 
-      if (response.ok) {
-        const responseData = await response.json();
-        if (responseData.status) {
-          console.log("Appointment edited successfully");
+  const closeEditModal = () => {
+    setEditIndex(null);
+    setSlot({ date: "", time: "", doctor: "" });
+  };
+
+  const updateSlot = async () => {
+    if (slot.date && slot.time && slot.doctor) {
+      const data = {
+        username: username,
+        doctor: slot.doctor,
+        date: slot.date,
+        time: slot.time,
+      };
+      try {
+        const response = await fetch("http://127.0.0.1:8000/update_slot/", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          const responseData = await response.json();
+          if (responseData.status) {
+            console.log("Appointment edited successfully");
+            const updatedSchedule = [...schedule];
+            updatedSchedule[editIndex] = slot;
+            setSchedule(updatedSchedule);
+            closeEditModal();
+          } else {
+            console.error("Failed to edit appointment:", responseData.message);
+          }
         } else {
-          console.error("Failed to edit appointment:", responseData.message);
+          console.error("Failed to edit appointment");
         }
-      } else {
-        console.error("Failed to edit appointment");
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
   return (
-    <div>
-      <p>
-        Hello, {username} (user role: {role})
-      </p>
-      <h2>My Appointments</h2>
+    <div className="container">
+      <h2>Hello, {role} {username}</h2>
+      <h3>My slots</h3>
       <table>
         <thead>
           <tr>
@@ -193,20 +209,52 @@ const PatientClinic = () => {
               <td>{slot.time}</td>
               <td>{slot.doctor}</td>
               <td>
-                <button onClick={() => editSlot(index)}>edit</button>
-                <button onClick={() => deleteSlot(index)}>Cancel</button>
+                <button className="tbuttons" onClick={() => openEditModal(index)}>Edit</button>
+                <button className="tbuttons" onClick={() => deleteSlot(index)}>Cancel</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      {/* Edit Modal */}
+      {editIndex !== null && (
+        <div className="edit-modal">
+          <h3>Edit appointment</h3>
+          <div>
+            <input
+              type="date"
+              placeholder="Date"
+              value={slot.date}
+              onChange={(e) => setSlot({ ...slot, date: e.target.value })}
+            />
+            <input
+              type="time"
+              placeholder="Time"
+              value={slot.time}
+              onChange={(e) => setSlot({ ...slot, time: e.target.value })}
+            />
+            <select
+              value={slot.doctor}
+              onChange={(e) => setSlot({ ...slot, doctor: e.target.value })}
+            >
+              {doctors.map((doctor) => (
+                <option key={doctor.username} value={doctor.username}>
+                  {doctor.username}
+                </option>
+              ))}
+            </select>
+            <br/>
+            <button className="editbttn" onClick={updateSlot}>Update</button>
+            <button className="editbttn"onClick={closeEditModal}>Cancel</button>
+          </div>
+        </div>
+      )}
       <div>
-        <h2>Create New Appointment</h2>
-        <div>
+        <h3>Create new slot</h3>
+        <div className="submit">
           <input
             type="date"
-            placeholder="Date"
+            placeholder="date"
             value={slot.date}
             onChange={(e) => setSlot({ ...slot, date: e.target.value })}
           />
@@ -217,17 +265,19 @@ const PatientClinic = () => {
             onChange={(e) => setSlot({ ...slot, time: e.target.value })}
           />
           <select
+            
             value={slot.doctor}
             onChange={(e) => setSlot({ ...slot, doctor: e.target.value })}
           >
+            <option value= "">Select doctor</option>
             {doctors.map((doctor) => (
               <option key={doctor.username} value={doctor.username}>
                 {doctor.username}
               </option>
             ))}
           </select>
+          <br/>
           <button onClick={createSlot}>Reserve</button>
-          {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         </div>
       </div>
     </div>

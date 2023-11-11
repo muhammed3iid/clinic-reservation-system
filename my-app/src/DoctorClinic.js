@@ -1,82 +1,126 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Style/Clinic.css'
+import { useHistory } from "react-router-dom";
 
 const DoctorClinic = () => {
   const [role] = useState("Doctor");
-  const [schedule, setSchedule] = useState([
-    { date: '2023-11-01', hour: '09:00 AM' },
-    { date: '2023-11-02', hour: '02:30 PM' },
-    // Add more schedule entries here
-  ]);
-  const [newSlot, setNewSlot] = useState({ date: '', hour: '' });
+  const [schedule, setSchedule] = useState([]);
+  const [slot, setSlot] = useState({ date: '', hour: '' });
   const [successMessage, setSuccessMessage] = useState('');
+  const history = useHistory();
+  const { username } = history.location.state;
 
-  const editSlot = (index) => {
-    // Add your edit slot logic here
-    console.log(`Edit slot at index ${index}`);
+  const fetchSchedule = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/doctor_view_slots/?username=${username}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const responseData = await response.json();
+        const scheduleData = responseData.object;
+        setSchedule(scheduleData);
+      } else {
+        console.error("Failed to fetch schedule data");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const cancelSlot = (index) => {
-    // Add your cancel slot logic here
-    console.log(`Cancel slot at index ${index}`);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchSchedule();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const addSlot = () => {
-    // Add your logic to add a new slot to the schedule
-    if (newSlot.date && newSlot.hour) {
-      setSchedule([...schedule, newSlot]);
-      setNewSlot({ date: '', hour: '' });
-      setSuccessMessage('Slot added successfully ✅');
+
+  const addSlot = async () => {
+    if (slot.date && slot.time) {
+      const data = {
+        username: username,
+        date: slot.date,
+        time: slot.time,
+      };
+      try {
+        const response = await fetch("http://127.0.0.1:8000/insert_slot/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          const responseData = await response.json();
+          if (responseData.status) {
+            setSchedule((prevSchedule) => [...prevSchedule, slot]);
+            setSlot({ date: "", time: ""});
+            setSuccessMessage("Appointment reserved successfully ✅");
+          } else {
+            console.error(
+              "Failed to reserve appointment:",
+              responseData.message
+            );
+          }
+        } else {
+          console.error("Failed to reserve appointment");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   return (
-    <div>
-      <p>Hello, User (user role: {role})</p>
-
-      <h2>My Slots</h2>
-
+    <div className="container">
+      <h2>Hello, {role} {username}</h2>
+      <br/>
+      <h3>My Slots</h3>
+      <br/>
       <table>
         <thead>
           <tr>
             <th>Date</th>
-            <th>Hour</th>
-            <th>Actions</th>
+            <th>Time</th>
           </tr>
         </thead>
         <tbody>
           {schedule.map((slot, index) => (
             <tr key={index}>
               <td>{slot.date}</td>
-              <td>{slot.hour}</td>
-              <td>
-                <button onClick={() => editSlot(index)}>Edit</button>
-                <button onClick={() => cancelSlot(index)}>Cancel</button>
-              </td>
+              <td>{slot.time}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <div>
-        <h2>Create New Slot</h2>
-        <div>
+      <br/>
+      <h3>Create new slot</h3>
+        <div className="submit">
           <input
             type="date"
-            placeholder="Date"
-            value={newSlot.date}
-            onChange={(e) => setNewSlot({ ...newSlot, date: e.target.value })}
+            placeholder="date"
+            value={slot.date}
+            onChange={(e) => setSlot({ ...slot, date: e.target.value })}
           />
           <input
             type="time"
-            placeholder="Hour"
-            value={newSlot.hour}
-            onChange={(e) => setNewSlot({ ...newSlot, hour: e.target.value })}
+            placeholder="time"
+            value={slot.time}
+            onChange={(e) => setSlot({ ...slot, time: e.target.value })}
           />
-          <button onClick={addSlot}>Add Slot</button>
-          {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+          <br/>
+          <button onClick={addSlot}>Add slot</button>
         </div>
-      </div>
     </div>
   );
 };

@@ -156,3 +156,15 @@ def get_doctors(request):  # -- GET ALL DOCTORS --------------------------------
     serializer = DoctorSerializer(doctors, many=True)
     return JsonResponse(
         {'status': True, 'message': 'Slots successfully retrieved.', "object": serializer.data})
+
+
+@api_view(['GET'])
+def doctor_view_slots(request):  # -- DOCTOR VIEW SLOTS ----------------------------------------------------------------
+    try:
+        username = request.query_params.get('username')
+        slot = Slot.objects.filter(doctor=username)
+        serializer = SlotSerializer(slot, many=True)
+        return JsonResponse(
+            {'status': True, 'message': 'Slots successfully retrieved.', "object": serializer.data})
+    except Exception as e:
+        return JsonResponse({'status': False, 'message': str(e)})

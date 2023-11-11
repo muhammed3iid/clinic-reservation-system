@@ -1,50 +1,116 @@
-
-.App {
-  display: flex;
-  justify-content: center;
+body {
+  background-color: #585858;
+  display:flex;
   align-items: center;
-  height: 100vh;
   flex-direction: column;
-  padding: 20px; /* Add padding around the content */
+  margin-top: 20px;
 }
 
-/* Style the greeting message */
-p {
-  font-size: 1.2rem;
-  margin: 20px 0; /* Add margin above and below the message */
+.container {
+  background-color: #A0A0A0;
+  border-radius: 20px;
+  box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  align-items: center;
+  padding: 20px 40px 20px 40px;
+  width:auto;
 }
 
-/* Style the table */
+h2 {
+  font-size: 42px;
+  font-family: 'Trebuchet MS';
+}
+
+h3 {
+  font-family: 'HP Simplified';
+  font-size: 28px;
+  width: 100%;
+  font-weight:300 ;
+}
+
 table {
-  border-collapse: collapse;
-  width: 80%;
-  max-width: 600px;
-  margin: 20px 0; /* Add margin above and below the table */
+  border-collapse:collapse;
+  width: 100%;
+  max-width: 700px;
+  font-family: 'HP Simplified';
+  margin: auto;
 }
 
 table, th, td {
-  border: 1px solid #ddd;
+  border: 1px solid black;
+  
 }
 
 th, td {
-  padding: 10px;
-  text-align: left;
+  padding: 12px;
+  text-align: center;
+}
+
+td{
+  background-color: #f2f2f2;
+
 }
 
 th {
-  background-color: #f2f2f2;
+  color: #f2f2f2;
+  background-color: black;
 }
 
-/* Style the buttons */
 button {
-  padding: 5px 10px;
-  margin: 5px;
-  background-color: #007bff;
+  background-color: black;
   color: #fff;
+  width: 300px;
   border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #585858;
+}
+
+input{
+  margin-left: 5px;
+  margin-bottom: 15px;
+  background-color: white;
+  color: black;
+  padding: 5px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  height: 26px;
+  font-family: 'HP Simplified';
+
+}
+
+select{
+  font-size: 15px;
+  margin-left: 5px;
+  margin-bottom: 15px;
+  background-color: white;
+  color: black;
+  padding: 5px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  height: 40px;
+  font-family: 'HP Simplified';
+}
+
+.submit{
+  align-content: center;
+}
+
+.tbuttons{
+  background-color:transparent;
+  color:black;
+  font-family: 'HP Simplified';
+  font-size: 20px;
+  width:auto
+}
+
+.editbttn{
+  margin-left: 8px;
+  width:150px
 }
