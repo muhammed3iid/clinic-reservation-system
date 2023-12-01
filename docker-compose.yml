@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  backend:
+    container_name: backend_container
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    networks:
+      - mynetwork
+      
+  frontend:
+    container_name: frontend_container
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+  mongodb:
+    container_name: db_container
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
