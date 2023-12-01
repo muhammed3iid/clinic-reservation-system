@@ -19,7 +19,7 @@ const PatientClinic = () => {
   const fetchSchedule = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/view_slots/?username=${username}`,
+        `http://localhost:8000/view_slots/?username=${username}`,
         {
           method: "GET",
           headers: {
@@ -41,7 +41,7 @@ const PatientClinic = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/get_doctors");
+      const response = await fetch("http://localhost:8000/get_doctors");
       if (response.ok) {
         const responseData = await response.json();
         const doctorsData = responseData.object;
@@ -76,7 +76,7 @@ const PatientClinic = () => {
         time: slot.time,
       };
       try {
-        const response = await fetch("http://127.0.0.1:8000/choose_slot/", {
+        const response = await fetch("http://localhost:8000/choose_slot/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const PatientClinic = () => {
       time: appointmentToCancel.time,
     };
     try {
-      const response = await fetch("http://127.0.0.1:8000/delete_slot/", {
+      const response = await fetch("http://localhost:8000/delete_slot/", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -162,7 +162,7 @@ const PatientClinic = () => {
         time: slot.time,
       };
       try {
-        const response = await fetch("http://127.0.0.1:8000/update_slot/", {
+        const response = await fetch("http://localhost:8000/update_slot/", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

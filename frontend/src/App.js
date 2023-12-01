@@ -5,12 +5,6 @@ import DoctorClinic from "./DoctorClinic";
 import PatientClinic from "./PatientClinic";
 
 function App() {
-//  const [currentPage, setCurrentPage] = useState("Authentication");
-
-  // const navigateTo = (page) => {
-  //   setCurrentPage(page);
-  // };
-
   return (
     <Router>
       <Switch>

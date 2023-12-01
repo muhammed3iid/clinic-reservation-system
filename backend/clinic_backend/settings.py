@@ -69,7 +69,12 @@ WSGI_APPLICATION = 'clinic_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': False,
         'NAME': 'clinic-reservation-system',
+        'CLIENT': {
+            'host': 'mongodb',
+            'port': 27017,
+        }
     }
 }
 

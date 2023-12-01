@@ -15,7 +15,7 @@ const Authentication = () => {
       username: username,
       password: password,
     };
-    const response = await fetch("http://127.0.0.1:8000/sign_in/", {
+    const response = await fetch("http://localhost:8000/sign_in/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -50,7 +50,7 @@ const Authentication = () => {
       role: role,
     };
     try {
-      const response = await fetch("http://127.0.0.1:8000/sign_up/", {
+      const response = await fetch("http://localhost:8000/sign_up/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

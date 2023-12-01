@@ -13,7 +13,7 @@ const DoctorClinic = () => {
   const fetchSchedule = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/doctor_view_slots/?username=${username}`,
+        `http://localhost:8000/doctor_view_slots/?username=${username}`,
         {
           method: "GET",
           headers: {
@@ -53,7 +53,7 @@ const DoctorClinic = () => {
         time: slot.time,
       };
       try {
-        const response = await fetch("http://127.0.0.1:8000/insert_slot/", {
+        const response = await fetch("http://localhost:8000/insert_slot/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
