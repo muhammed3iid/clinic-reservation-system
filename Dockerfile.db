@@ -1,3 +1,8 @@
 FROM mongo:latest
 
-EXPOSE 27017:27017
+RUN mkdir -p /data/db/journal && \
+    chown -R mongodb:mongodb /data/db
+
+EXPOSE 27017
+
+CMD ["mongod"]
